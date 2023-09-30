@@ -15,14 +15,13 @@ public class LaptopController {
     private ApiService apiService;
 
     @PostMapping("/")
-    public ResponseEntity<String> addLaptop(Laptop laptop) {
-        try {
-            // Assign a unique ID to the laptop before adding it
-            laptop.setLaptopId(nextId++);
-            laptops.add(laptop);
-            return ResponseEntity.ok("true"); // Return success
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("false"); // Return error
+    public ResponseEntity<Boolean> addLaptop(@RequestBody Laptop laptop) {
+        boolean isAdded = apiService.addLaptop(laptop);
+        
+        if (isAdded) {
+            return ResponseEntity.ok(true); // Return HTTP 200 OK with true
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false); // Return HTTP 400 Bad Request with false
         }
     }
 
