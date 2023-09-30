@@ -15,14 +15,8 @@ public class LaptopController {
     private ApiService apiService;
 
     @PostMapping("/")
-    public ResponseEntity<Boolean> addLaptop(@RequestBody Laptop laptop) {
-        boolean isAdded = apiService.addLaptop(laptop);
-        
-        if (isAdded) {
-            return ResponseEntity.ok(true); // Return HTTP 200 OK with true
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false); // Return HTTP 400 Bad Request with false
-        }
+    public boolean addLaptop(@RequestBody Laptop laptop) {
+        return apiService.addLaptop(laptop);
     }
 
     @GetMapping("/{laptopid}")
