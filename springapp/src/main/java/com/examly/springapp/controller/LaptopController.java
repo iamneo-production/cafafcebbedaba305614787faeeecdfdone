@@ -15,8 +15,15 @@ public class LaptopController {
     private ApiService apiService;
 
     @PostMapping("/")
-    public boolean addLaptop(@RequestBody Laptop laptop) {
-        return apiService.addLaptop(laptop);
+    public ResponseEntity<String> addLaptop(Laptop laptop) {
+        try {
+            // Assign a unique ID to the laptop before adding it
+            laptop.setLaptopId(nextId++);
+            laptops.add(laptop);
+            return ResponseEntity.ok("true"); // Return success
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("false"); // Return error
+        }
     }
 
     @GetMapping("/{laptopid}")
